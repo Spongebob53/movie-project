@@ -1,8 +1,12 @@
 
+import model.movie.MovieDAO;
+import model.movie.MovieVO;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class inputMovie {
     private static inputMovie instance;
@@ -22,17 +26,21 @@ public class inputMovie {
         super();
     }
 
-    public static ResultSet getRoomId() throws Exception {
+    public static ArrayList getRoomId() throws Exception {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        ArrayList<String> rooms_id = new ArrayList();
 
         try {
             conn = DriverManager.getConnection(url, id, pw);
             String sql1 = "SELECT room_id FROM room";
             ps = conn.prepareStatement(sql1);
             rs = ps.executeQuery();
-            return rs;
+            while(rs.next()){
+                rooms_id.add(rs.getString("room_id"));
+            }
+            return rooms_id;
         }catch(Exception e){
             throw new Exception("상영관 호출하기 오류 : " + e.toString());
         }finally {
@@ -58,11 +66,11 @@ public class inputMovie {
         }
     }
 
-    public static int[] getMovieTime() throws Exception {
+    public static MovieVO getMovieTime() throws Exception {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        int[] movie = new int[2];
+        MovieVO movie = new MovieVO();
         try {
             conn = DriverManager.getConnection(url, id, pw);
             String sql = "SELECT movie_id, movie_time FROM movie WHERE movie_title = ?";
@@ -70,8 +78,8 @@ public class inputMovie {
             ps.setString(1, perMovie());
             rs = ps.executeQuery();
             while (rs.next()) {
-                movie[0] = rs.getInt("movie_id");
-                movie[1] = rs.getInt("movie_time");
+                movie.setMovie_id(rs.getString("movie_id"));
+                movie.setMovie_time(rs.getInt("movie_time"));
             }
             return movie;
         } catch (Exception e) {
@@ -103,24 +111,24 @@ public class inputMovie {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        ArrayList<String> rooms_id;
 
         try {
             conn = DriverManager.getConnection(url, id, pw);
-            rs = getRoomId();
-            int cnt = 1;
-            while (rs.next()) {
+            rooms_id = getRoomId();
+            for (String room_id : rooms_id) {
                 int addHour = 0;
                 int addMinute = 0;
                 for (int a = 0; a < 5; a++) {
                     String time = "22/2/4 " + (8 + addHour) + ":" + (0 + addMinute);
-                    int[] movie = getMovieTime();
-                    int movie_id = movie[0];
-                    int movie_time = movie[1];
-                    String sql = "INSERT INTO movie_show(movie_show_id, movie_id, room_id, show_start) VALUES(LPAD(?,5,'0'),?,?,TO_DATE(?,'YY/MM/DD HH24:MI'))";
+                    MovieVO movie = getMovieTime();
+                    String movie_id = movie.getMovie_id();
+                    int movie_time = movie.getMovie_time();
+                    String sql = "INSERT INTO movie_show(movie_show_id, movie_id, room_id, show_start) VALUES(?||LPAD(seq_movie_show.nextval,7,'0'),LPAD(?,5,'0'),?,TO_DATE(?,'YY/MM/DD HH24:MI'))";
                     ps = conn.prepareStatement(sql);
-                    ps.setString(1, Integer.toString(cnt++));
-                    ps.setInt(2, movie_id);
-                    ps.setString(3, rs.getString(1));
+                    ps.setString(1, time.substring(0,2));
+                    ps.setString(2, movie_id);
+                    ps.setString(3, room_id);
                     ps.setString(4, time);
                     ps.executeQuery();
                     movie_time += 30;
@@ -133,7 +141,7 @@ public class inputMovie {
                 }
             }
         } catch (Exception e) {
-            throw new Exception("여기서 오류? : " + e.getMessage());
+            throw new Exception("상영 정보 등록 오류 : " + e.getMessage());
         } finally {
             if (rs != null) {
                 try {

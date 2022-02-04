@@ -1,7 +1,7 @@
 package model.movie;
 
 public class MovieVO {
-    private int movie_id;
+    private String movie_id;
     private String movie_title;
     private int movie_time;
     private int movie_age;
@@ -10,7 +10,7 @@ public class MovieVO {
     public MovieVO() {
     }
 
-    public MovieVO(int movie_id, String movie_title, int movie_time, int movie_age, String movie_gerne) {
+    public MovieVO(String movie_id, String movie_title, int movie_time, int movie_age, String movie_gerne) {
         this.movie_id = movie_id;
         this.movie_title = movie_title;
         this.movie_time = movie_time;
@@ -18,11 +18,11 @@ public class MovieVO {
         this.movie_gerne = movie_gerne;
     }
 
-    public int getMovie_id() {
+    public String getMovie_id() {
         return movie_id;
     }
 
-    public void setMovie_id(int movie_id) {
+    public void setMovie_id(String movie_id) {
         this.movie_id = movie_id;
     }
 
