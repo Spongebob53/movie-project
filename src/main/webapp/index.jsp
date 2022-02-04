@@ -20,6 +20,7 @@
     <title>Title</title>
     <link href="css/reset.css" rel="stylesheet" type="text/css">
     <link href="css/text.css" rel="stylesheet" type="text/css">
+    <link href="css/logo.css" rel="stylesheet" type="text/css">
     <link href="css/header.css" rel="stylesheet" type="text/css">
     <link href="css/footer.css" rel="stylesheet" type="text/css">
     <link href="css/main.css" rel="stylesheet" type="text/css">
@@ -34,7 +35,7 @@
 				<a href="#"><i class="bi bi-search"></i></a>
 			</div>
             <div class="header-inner header-logo">
-				<a href="index.jsp"></a>
+				<a href="index.jsp"><img src="img/textLogo-color.png" class="logo-medium"></a>
 			</div>
             <div class="header-inner header-member">
             	<a class="list-txt" href="login.jsp">로그인</a>
@@ -96,7 +97,7 @@
 	<footer>
     	<div class="footer">
     		<div class="footer-logo">
-				<a href="index.jsp"></a>
+				<a href="index.jsp"><img src="img/textLogo-gray.png" class="logo-medium"></a>
 			</div>
     		<div class="footer-info">
 				<section class="footer-info_list">

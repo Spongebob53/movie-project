@@ -1,13 +1,15 @@
-.member-login {
+.login {
 	text-align: center;
 	width: 500px;
 	margin: 0 auto;
-	padding: 0 50px;
+	padding: 100px 50px 0;
 }
 
-.member-login-logo {
+.login-logo {
 	width: 200px;
-	height: 45px;
-	background-color: gray;	
-	margin: 100px auto 0;
+	margin: 50px auto;
+}
+
+.login-form {
+	width: 400px;
 }
