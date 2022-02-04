@@ -20,7 +20,7 @@
     <title>Title</title>
 </head>
 <body>
-여기는 메인페이지
+여기는 메인페이지 제발 되라...
 <a href="ticketing.jsp">예매</a>
 <%if(session.getAttribute("customer_id")==null){%>
     <a href="login.jsp">로그인</a>
