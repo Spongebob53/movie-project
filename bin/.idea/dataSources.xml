@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Oracle [Personal]" uuid="a3828497-3aab-4fc3-a0fb-2c31ec0840dd">
+      <driver-ref>b33e9e69-a405-41ce-bdd4-312087849484</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@db202201101241_high?TNS_ADMIN=$USER_HOME$/Oracle/instantclient/network/Wallet_DB202201101241</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="TNSADMIN_DIR" value="$USER_HOME$/Oracle/instantclient/network/admin" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Oracle [Public]" uuid="c9e08fc2-84fb-4ad7-857b-2f48e95408d7">
+      <driver-ref>b33e9e69-a405-41ce-bdd4-312087849484</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@db202201202020_high?TNS_ADMIN=$USER_HOME$/Oracle/instantclient/network/Wallet_DB202201202020</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="TNSADMIN_DIR" value="$USER_HOME$/Oracle/instantclient/network/admin" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
