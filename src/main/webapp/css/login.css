@@ -1,0 +1,13 @@
+.member-login {
+	text-align: center;
+	width: 500px;
+	margin: 0 auto;
+	padding: 0 50px;
+}
+
+.member-login-logo {
+	width: 200px;
+	height: 45px;
+	background-color: gray;	
+	margin: 100px auto 0;
+}
