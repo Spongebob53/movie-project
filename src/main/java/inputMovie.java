@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class inputMovie {
     private static inputMovie instance;
 
-//    private static final String url = "jdbc:oracle:thin:@db202201202020_high?TNS_ADMIN=/Users/spongebob53/Oracle/instantclient/network/Wallet_DB202201202020";
-    private static final String url = "jdbc:oracle:thin:@db202201202020_high?TNS_ADMIN=/Users/iyxuna/Downloads/Wallet_DB202201202020";
+    private static final String url = "jdbc:oracle:thin:@db202201202020_high?TNS_ADMIN=/Users/spongebob53/Oracle/instantclient/network/Wallet_DB202201202020";
+    //    private static final String url = "jdbc:oracle:thin:@db202201202020_high?TNS_ADMIN=/Users/iyxuna/Downloads/Wallet_DB202201202020";
     private static final String id = "admin";
     private static final String pw = "1q2w3e4r5t^Y";
 
@@ -27,7 +27,7 @@ public class inputMovie {
         super();
     }
 
-    public static ArrayList getRoomId() throws Exception {
+    public static ArrayList getRoomId(String area_id) throws Exception {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -35,16 +35,17 @@ public class inputMovie {
 
         try {
             conn = DriverManager.getConnection(url, id, pw);
-            String sql1 = "SELECT room_id FROM room";
+            String sql1 = "SELECT room_id FROM room WHERE room_id LIKE ?";
             ps = conn.prepareStatement(sql1);
+            ps.setString(1, area_id+'%');
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 rooms_id.add(rs.getString("room_id"));
             }
             return rooms_id;
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new Exception("상영관 호출하기 오류 : " + e.toString());
-        }finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -116,7 +117,7 @@ public class inputMovie {
 
         try {
             conn = DriverManager.getConnection(url, id, pw);
-            rooms_id = getRoomId();
+            rooms_id = getRoomId("01");
             for (String room_id : rooms_id) {
                 int addHour = 0;
                 int addMinute = 0;
@@ -125,9 +126,9 @@ public class inputMovie {
                     MovieVO movie = getMovieTime();
                     String movie_id = movie.getMovie_id();
                     int movie_time = movie.getMovie_time();
-                    String sql = "INSERT INTO movie_show(movie_show_id, movie_id, room_id, show_start) VALUES(?||LPAD(seq_movie_show.nextval,7,'0'),LPAD(?,5,'0'),?,TO_DATE(?,'YY/MM/DD HH24:MI'))";
+                    String sql = "INSERT INTO movie_show(movie_show_id, movie_id, room_id, show_start) VALUES(?||LPAD(seq_movie_show.nextval,7,'0'),LPAD(?,6,'0'),?,TO_DATE(?,'YY/MM/DD HH24:MI'))";
                     ps = conn.prepareStatement(sql);
-                    ps.setString(1, time.substring(0,2));
+                    ps.setString(1, time.substring(0, 2));
                     ps.setString(2, movie_id);
                     ps.setString(3, room_id);
                     ps.setString(4, time);
@@ -148,7 +149,6 @@ public class inputMovie {
                 try {
                     rs.close();
                 } catch (Exception e) {
-
                 }
             }
             if (ps != null) {

@@ -17,7 +17,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Java Cinema</title>
     <link href="css/reset.css" rel="stylesheet" type="text/css">
     <link href="css/text.css" rel="stylesheet" type="text/css">
     <link href="css/logo.css" rel="stylesheet" type="text/css">
