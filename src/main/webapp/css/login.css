@@ -6,7 +6,6 @@
 }
 
 .login {
-	text-align: center;
 	width: 400px;
 	margin: 0 auto;
 	padding: 0 50px;
@@ -14,6 +13,7 @@
 }
 
 .login-logo {
+	text-align: center;
 	padding-top: 100px;
 	margin: 0 auto;
 }
