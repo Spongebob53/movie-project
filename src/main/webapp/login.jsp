@@ -39,15 +39,28 @@
 
 		<div class="login-form">		
 			<form action="checkLogin.jsp" method="post">
-			    <input type="text" name="customer_id" class="input-box" placeholder="아이디" value="<%=save_id%>">
-			    <input type="password" name="customer_pw" class="input-box" placeholder="비밀번호">
-			    <button type="submit">로그인</button>
-			    <input type="checkbox" name="save_id" id="save_id" <%=checked%>>
-			    <label for="save_id">아이디 저장</label>
-			    <a href="#">아이디 / 비밀번호 찾기</a>
+			    <input type="text" name="customer_id" class="input-box input_id" placeholder="아이디" value="<%=save_id%>">
+			    <input type="password" name="customer_pw" class="input-box input_pass" placeholder="비밀번호">
+			    <button type="submit" class="input-box btn_login main-txt">로그인</button>
+			    <section class="input_login-service">
+				    <div class="input_save-id list-txt">
+					    <input type="checkbox" name="save_id" id="save_id" <%=checked%>>
+					    <label for="save_id">아이디 저장</label>
+					</div>
+					<div class="input_find-id list-txt">
+						<a href="#">아이디 / 비밀번호 찾기</a>
+					</div>
+				</section>
 			</form>
 		</div>
-		<a href="join.jsp">회원가입</a>
+		
+		<hr>
+		
+		<div class="login-join">
+			<form action="join.jsp" method="post">
+				<button type="submit" class="input-box btn_join main-txt">회원가입</button>
+			</form>
+		</div>
 
 	</div>
 	
