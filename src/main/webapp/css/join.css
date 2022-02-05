@@ -5,23 +5,18 @@
     font-style: normal;
 }
 
-.login {
-	text-align: center;
+
+.join {
+/* 	text-align: center; */
 	width: 400px;
 	margin: 0 auto;
 	padding: 0 50px;
 	font-family: 'Pretendard-Regular';
 }
 
-.login-logo {
+.join-logo {
 	padding-top: 100px;
 	margin: 0 auto;
-}
-
-/****** login-form 영역 ******/
-.login-form {
-	margin: 80px auto 0;
-	width: 400px;
 }
 
 .input-box {
@@ -34,7 +29,20 @@
 	padding: 5px 16px;
 }
 
-.btn_login {
+
+/****** join-form 영역 ******/
+.join-form {
+	margin: 80px auto 100px;
+	width: 400px;
+}
+
+.section-title {
+/* 	float: left; */
+	margin-bottom: 16px;
+	font-weight: bold;
+}
+
+.btn_join {
 	width: 400px;
 	height: 60px;
 	margin-bottom: 8px;
@@ -46,48 +54,44 @@
 	cursor: pointer;
 }
 
-.btn_login:hover {
+.btn_join:hover {
 	background-color: rgba(90, 74, 227, 0.9);
 }
 
-.input_login-service {
-	overflow: auto;
+/****** 회원정보 영역 ******/
+.join_member-info {
+	margin: 80px auto 0;	
 }
 
-.input_save-id {
-	float: left;
-	cursor: pointer;
-}
-label {
-	cursor: pointer;
-}
-
-.input_find-id {
-	float: right;
-}
 
 hr {
-	clear: both;
 	margin-top: 50px;
 	border: 0.5px solid #808080;
 }
 
-/****** login-join 영역 ******/
-.login-join {
-	margin: 50px auto 0;
+/****** 서비스약관 영역 ******/
+.join_terms {
+	margin: 50px auto 0;	
 	width: 400px;
 }
 
-.btn_join {
+.terms-box {
 	width: 400px;
 	height: 60px;
 	margin-bottom: 8px;
 	border-radius: 14px;
-	border: none;
-	font-size: 15px;
+	border: 1px solid #e9e9e9;
+	font-size: 15px; 
+}
+.agree-all {
 	background-color: #e9e9e9;
 	color: #808080;
-	cursor: pointer;
 }
 
-
+input[type=checkbox] {
+	margin-top: 24px;
+	margin-left: 16px;
+}
+label {
+	cursor: pointer;
+}
