@@ -8,7 +8,7 @@
 /****** header, nav css ******/
 header, nav {
     padding: 0 300px;
-    border-bottom: 0.5px solid lightgray;
+    border-bottom: 0.5px solid #e9e9e9;
     font-family: 'Pretendard-Regular';
     text-align: center;
 }
@@ -47,7 +47,7 @@ header, nav {
 
 .nav-list ul li:hover {	
    font-weight: bold;
-   background-color: #eeeeee;
+   background-color: #e9e9e9;
 }
 
 .nav-list ul li a {	
