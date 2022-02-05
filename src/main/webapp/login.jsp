@@ -39,8 +39,8 @@
 
 		<div class="login-form">		
 			<form action="checkLogin.jsp" method="post">
-			    <input type="text" name="customer_id" placeholder="아이디" value="<%=save_id%>">
-			    <input type="password" name="customer_pw" placeholder="비밀번호">
+			    <input type="text" name="customer_id" class="input-box" placeholder="아이디" value="<%=save_id%>">
+			    <input type="password" name="customer_pw" class="input-box" placeholder="비밀번호">
 			    <button type="submit">로그인</button>
 			    <input type="checkbox" name="save_id" id="save_id" <%=checked%>>
 			    <label for="save_id">아이디 저장</label>
