@@ -14,20 +14,16 @@ header, nav {
 }
 
 .header {
-    padding: 20px 0;
+    padding: 20px 0 40px;
     text-align: center;
 }
 
 .header-inner {
     display: inline-block;
-/*     cursor: pointer; */
 }
 
 .header-logo {
-	width: 200px;
-	height: 45px;
-	margin-right: -120px;
-	background-color: gray;	
+	margin-right: -50px;
 }
 
 .header-search {
