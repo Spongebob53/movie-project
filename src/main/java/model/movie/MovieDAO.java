@@ -99,6 +99,32 @@ public class MovieDAO extends ConnectDB {
         }
     }
 
+    public MovieVO getMovieList(String movieId) throws Exception{
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        MovieVO movie = new MovieVO();
+        try{
+            conn = DriverManager.getConnection(url,id,pw);
+            String sql = "SELECT * FROM movie WHERE movie_id = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,movieId);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                movie.setMovie_id(rs.getString("movie_id"));
+                movie.setMovie_title(rs.getString("movie_title"));
+                movie.setMovie_age(rs.getInt("movie_age"));
+            }
+            return movie;
+        }catch(Exception e){
+            throw new Exception("상영 영화 리스트 오류 : " + e.toString());
+        }finally{
+            if( rs != null ) { try{ rs.close(); } catch(Exception e){} }
+            if( ps != null ) { try{ ps.close(); } catch(Exception e){} }
+            if( conn != null ) { try{ conn.close(); } catch(Exception e){} }
+        }
+    }
+
     //예매하기
     public int book(String book_id, String customer_id) throws Exception{
         Connection conn = null;
@@ -119,11 +145,12 @@ public class MovieDAO extends ConnectDB {
     }
 
     // 지역 리스트 가져오기
-    public ArrayList<AreaVO> areaList() throws Exception{
+    public List<AreaVO> areaList() throws Exception{
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<AreaVO> areas = new ArrayList();
+        List<AreaVO> areas = new ArrayList();
+        boolean isEmpty = true;
 
         try {
             conn = DriverManager.getConnection(url,id,pw);
@@ -131,10 +158,14 @@ public class MovieDAO extends ConnectDB {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
+                isEmpty = false;
                 AreaVO area = new AreaVO();
                 area.setArea_id(rs.getString("area_id"));
                 area.setArea_name(rs.getString("area_name"));
                 areas.add(area);
+            }
+            if(isEmpty){
+                return Collections.emptyList();
             }
             return areas;
         } catch (Exception e) {
@@ -147,23 +178,27 @@ public class MovieDAO extends ConnectDB {
     }
 
     // 지역별 지점 리스트 가져오기
-    public ArrayList<TheaterVO> theaterList(String area_id) throws Exception {
+    public List<TheaterVO> theaterList(String area_id) throws Exception {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<TheaterVO> theaters= new ArrayList();
-
+        List<TheaterVO> theaters= new ArrayList();
+        boolean isEmpty = true;
         try {
             conn = DriverManager.getConnection(url,id,pw);
-            String sql = "SELECT theater_name, theater_id FROM room WHERE LIKE ?";
+            String sql = "SELECT * FROM theater WHERE theater_id LIKE ?";
             ps = conn.prepareStatement(sql);
-            ps.setString(1,area_id+'%');
+            ps.setString(1,area_id+"%");
             rs = ps.executeQuery();
             while (rs.next()){
+                isEmpty = false;
                 TheaterVO theater = new TheaterVO();
                 theater.setTheater_id(rs.getString("theater_id"));
                 theater.setTheater_name(rs.getString("theater_name"));
                 theaters.add(theater);
+            }
+            if(isEmpty){
+                return Collections.emptyList();
             }
             return theaters;
         } catch (Exception e) {
@@ -176,11 +211,12 @@ public class MovieDAO extends ConnectDB {
     }
 
     // 지점별 상영관 리스트 가져오기
-    public ArrayList<RoomVO> roomList(String theater_id) throws Exception {
+    public List<RoomVO> roomList(String theater_id) throws Exception {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<RoomVO> rooms= new ArrayList();
+        List<RoomVO> rooms= new ArrayList();
+        boolean isEmpty = true;
 
         try {
             conn = DriverManager.getConnection(url,id,pw);
@@ -189,11 +225,15 @@ public class MovieDAO extends ConnectDB {
             ps.setString(1,theater_id+'%');
             rs = ps.executeQuery();
             while (rs.next()){
+                isEmpty = false;
                 RoomVO room = new RoomVO();
                 room.setRoom_id(rs.getString("room_id"));
                 room.setRoom_name(rs.getString("room_name"));
                 room.setRoom_seat(rs.getInt("room_seat"));
                 rooms.add(room);
+            }
+            if(isEmpty){
+                return Collections.emptyList();
             }
             return rooms;
         } catch (Exception e) {
@@ -206,24 +246,25 @@ public class MovieDAO extends ConnectDB {
     }
 
     // 지점별 상영 영화 목록
-    public ArrayList<Movie_showVO> showList(String theater_id) throws Exception{
+    public List<String> showList(String theater_id) throws Exception{
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<Movie_showVO> shows = new ArrayList();
+        List<String> shows = new ArrayList();
+        boolean isEmpty = true;
+
         try{
             conn = DriverManager.getConnection(url,id,pw);
-            String sql = "SELECT * FROM movie_show WHERE room_id = ?";
+            String sql = "SELECT movie_id FROM movie_show WHERE room_id LIKE ? GROUP BY movie_id";
             ps = conn.prepareStatement(sql);
             ps.setString(1, theater_id+'%');
             rs = ps.executeQuery();
             while (rs.next()){
-                Movie_showVO show = new Movie_showVO();
-                show.setMovie_show_id(rs.getString("movie_show_id"));
-                show.setMovie_id(rs.getString("movie_id"));
-                show.setRoom_id(rs.getString("room_id"));
-                show.setShow_start(rs.getString("show_start"));
-                shows.add(show);
+                isEmpty = false;
+                shows.add(rs.getString("movie_id"));
+            }
+            if(isEmpty){
+                return Collections.emptyList();
             }
             return shows;
         }catch(Exception e){
@@ -263,11 +304,12 @@ public class MovieDAO extends ConnectDB {
     }
 
     // 상영별 예매 완료된 좌석 불러오기
-    public ArrayList<String> booked(String movie_show_id) throws Exception{
+    public List<String> booked(String movie_show_id) throws Exception{
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<String> bookList = new ArrayList();
+        List<String> bookList = new ArrayList();
+        boolean isEmpty = true;
 
         try{
             conn = DriverManager.getConnection(url,id,pw);
@@ -276,7 +318,11 @@ public class MovieDAO extends ConnectDB {
             ps.setString(1, movie_show_id+"%");
             rs = ps.executeQuery();
             while(rs.next()){
+                isEmpty = false;
                 bookList.add(rs.getString("book_id").substring(9));
+            }
+            if(isEmpty){
+                return Collections.emptyList();
             }
             return bookList;
         }catch(Exception e){
@@ -287,4 +333,30 @@ public class MovieDAO extends ConnectDB {
             if( conn != null ) { try{ conn.close(); } catch(Exception e){} }
         }
     }
+
+    // 상영관 이름 찾기
+    public String searchTheater(String theater_id) throws Exception{
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String theater_name = null;
+        try{
+            conn = DriverManager.getConnection(url,id,pw);
+            String sql = "SELECT * FROM theater WHERE theater_id = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, theater_id);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                theater_name = rs.getString("theater_name");
+            }
+            return theater_name;
+        }catch(Exception e){
+            throw new Exception("상영관 찾기 오류 : " + e.toString());
+        }finally {
+            if( rs != null ) { try{ rs.close(); } catch(Exception e){} }
+            if( ps != null ) { try{ ps.close(); } catch(Exception e){} }
+            if( conn != null ) { try{ conn.close(); } catch(Exception e){} }
+        }
+    }
+
 }
