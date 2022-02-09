@@ -25,6 +25,9 @@
     <link href="css/footer.css" rel="stylesheet" type="text/css">
     <link href="css/main.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -32,13 +35,20 @@
 	 <header>
         <div class="header">
             <div class="header-inner header-search">
-				<a href="#"><i class="bi bi-search"></i></a>
+				<a href="#" class="list-txt"><i class="bi bi-search"></i></a>
 			</div>
             <div class="header-inner header-logo">
 				<a href="index.jsp"><img src="img/textLogo-color.png" class="logo-medium"></a>
 			</div>
             <div class="header-inner header-member">
-            	<a class="list-txt" href="login.jsp">로그인</a>
+            	<%if(session.getAttribute("customer_id")==null){%>
+            	<a href="login.jsp" class="list-txt">로그인</a>
+				<%}else{
+			    	String customer_id = (String)session.getAttribute("customer_id");
+				%>
+<%-- 			    <div class="list-txt"><%=customer_id%>님 반갑습니다</div> --%>
+			    <a href="logout.jsp" class="list-txt">로그아웃</a>
+				<%}%> 
             	<a class="list-txt" href="join.jsp">회원가입</a>
             	<a class="list-txt" href="#">고객센터</a>
             </div>
@@ -57,8 +67,34 @@
         </div>
     </nav>
     
-    <main class="container">
-    	
+    <section class="main-banner">
+    	<div class="main-banner_inner">
+    		<img src="">
+    		<div class="inner_content">
+	    		<h1>영화 제목</h1>
+	    		<p>줄거리</p>
+    		</div>
+    	</div>
+    </section>
+    
+    <main class="main">
+    	<div class="main_movie-chart">
+    		<h1 class="title-txt">영화 순위</h1>
+    	</div>
+    	<div class="main_event">
+    		<h1 class="title-txt">이벤트</h1>
+    	</div>
+    	<div class="main_news">
+    		<h1 class="news_title title-txt">소식</h1>
+    		<div class="news_content">
+    			<a href="#">
+	    			<div class="content_notice">
+	    				
+	    			</div>
+    			</a>
+    			<a href="#"><div class="content_service-center"></div></a>
+    		</div>
+    	</div>
     </main>
     
     

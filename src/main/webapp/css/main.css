@@ -1,4 +1,47 @@
-.container {
-    padding: 0 350px;
-    font-family: 'Pretendard-Regular';
+.main-banner {
+	text-align: center;
+	background-color: #e9e9e9;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.main-banner_inner {
+	height: 500px;
+}
+
+.main {
+	padding: 0 300px;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.content_box {
+	width: 430px;
+}
+
+.main_movie-chart {
+	margin-top: 100px;
+}
+
+.main_event {
+	margin-top: 100px;
+}
+
+.main_news {
+	margin-top: 100px;
+}
+.news_content {
+	margin-top: 20px;
+}
+.content_notice {
+	float: left;
+	width: 430px;
+	height: 60px;
+	border-radius: 14px;
+	background-color: rgb(90, 74, 227);
+}
+.content_service-center {
+	float: right;
+	width: 450px;
+	height: 60px;
+	border-radius: 14px;
+	border: 1px solid rgb(90, 74, 227);
 }
