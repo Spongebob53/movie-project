@@ -35,6 +35,7 @@
     String area_id = request.getParameter("area");
     String theater_id = request.getParameter("theater");
     String movie_id = request.getParameter("movie");
+    String day = request.getParameter("day");
 %>
 <!-- 지역 목록 -->
 <ul>
@@ -73,10 +74,18 @@
         }
     %>
 </ul>
+<ul>
+    <%if(movie_id!= null){%>
+    <li>2022</li>
+    <li>2</li>
+    <li><a href="ticketing.jsp?area=<%=area_id%>&theater=<%=theater_id%>&movie=<%=movie_id%>&day=20220204">4</a></li>
+    <%}%>
+</ul>
 
 <!--선택 현황-->
 <span>극장 : </span><span><% if (theater_id != null) out.print(movie.searchTheater(theater_id));%></span><br>
 <span>영화 : </span><span><% if (movie_id != null) out.print(movie.getMovieList(movie_id).getMovie_title());%></span>
+<span>일시 : </span><span><% if (day != null) out.print(day);%></span>
 
 </body>
 </html>

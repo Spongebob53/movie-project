@@ -15,7 +15,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Ticketing</title>
 </head>
 <body>
 <%if (session.getAttribute("customer_id") == null) {%>
@@ -35,31 +35,57 @@
     String area_id = request.getParameter("area");
     String theater_id = request.getParameter("theater");
     String movie_id = request.getParameter("movie");
+    String day = request.getParameter("day");
 %>
+<!-- 지역 목록 -->
 <ul>
     <%for (AreaVO area : areaList) {%>
     <li><a href="ticketing.jsp?area=<%=area.getArea_id()%>"><%=area.getArea_name()%>
     </a></li>
     <%}%>
 </ul>
+<!--지역별 지점 목록-->
 <ul>
-    <%if (area_id != null) {
-        for (TheaterVO theater : movie.theaterList(area_id)) {%>
-            <li><a href="ticketing.jsp?area=<%=area_id%>&theater=<%=theater.getTheater_id()%>"><%=theater.getTheater_name()%></a></li>
-        <%}%>
+    <%
+        if (area_id != null) {
+            for (TheaterVO theater : movie.theaterList(area_id)) {
+    %>
+    <li><a href="ticketing.jsp?area=<%=area_id%>&theater=<%=theater.getTheater_id()%>"><%=theater.getTheater_name()%>
+    </a></li>
+    <%}%>
     <%}%>
 </ul>
+<!--지점별 상영 영화 목록-->
 <ul>
-    <%if (theater_id != null){
-        for(String show : movie.showList(theater_id)){
-            MovieVO movieInfo = movie.getMovieList(show);%>
-            <li><a href="ticketing.jsp?area=<%=area_id%>&theater=<%=theater_id%>&movie=<%=movieInfo.getMovie_id()%>">제목 : <%=movieInfo.getMovie_title()%></a></li>
-    <%}
-    }%>
+    <%
+        if (theater_id != null) {
+            for (String show : movie.showList(theater_id)) {
+                MovieVO movieInfo = movie.getMovieList(show);
+    %>
+    <li>
+        <a href="ticketing.jsp?area=<%=area_id%>&theater=<%=theater_id%>&movie=<%=movieInfo.getMovie_id()%>">
+            <span>연령 : <%=movieInfo.getMovie_age()%></span>
+            <br>
+            <span>제목 : <%=movieInfo.getMovie_title()%></span>
+        </a>
+    </li>
+    <%
+            }
+        }
+    %>
+</ul>
+<ul>
+    <%if(movie_id!= null){%>
+    <li>2022</li>
+    <li>2</li>
+    <li><a href="ticketing.jsp?area=<%=area_id%>&theater=<%=theater_id%>&movie=<%=movie_id%>&day=20220204">4</a></li>
+    <%}%>
 </ul>
 
-<span>극장 : </span><span><% if(theater_id != null) out.print(movie.searchTheater(theater_id));%></span><br>
-<span>영화 : </span><span><% if(movie_id != null) out.print(movie.getMovieList(movie_id).getMovie_title());%></span>
+<!--선택 현황-->
+<span>극장 : </span><span><% if (theater_id != null) out.print(movie.searchTheater(theater_id));%></span><br>
+<span>영화 : </span><span><% if (movie_id != null) out.print(movie.getMovieList(movie_id).getMovie_title());%></span>
+<span>일시 : </span><span><% if (day != null) out.print(day);%></span>
 
 </body>
 </html>

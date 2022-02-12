@@ -359,4 +359,39 @@ public class MovieDAO extends ConnectDB {
         }
     }
 
+    // 해당 영화 상영관 시간표 호출
+    public List<Movie_showVO> theaterMovieTime(String movie_id, String theater_id) throws Exception{
+        Connection conn = null;
+        PreparedStatement ps = null;
+        List<Movie_showVO> movieTime = new ArrayList();
+        ResultSet rs = null;
+        boolean isEmpty = true;
+        try {
+            conn = DriverManager.getConnection(url,id,pw);
+            String sql = "SELECT * FROM movie_show WHERE movie_id = ? AND room_id LIKE ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,movie_id);
+            ps.setString(2,theater_id+"%");
+            rs = ps.executeQuery();
+            while(rs.next()){
+                isEmpty = false;
+                Movie_showVO movie_show = new Movie_showVO();
+                movie_show.setMovie_show_id(rs.getString("movie_show_id"));
+                movie_show.setMovie_id(rs.getString("movie_id"));
+                movie_show.setRoom_id(rs.getString("room_id"));
+                movie_show.setShow_start(rs.getString("show_start"));
+                movieTime.add(movie_show);
+            }
+            if(isEmpty){
+                return Collections.emptyList();
+            }
+            return movieTime;
+        } catch (SQLException e) {
+            throw new Exception("상영관 영화 스케줄 오류 : " + e.toString());
+        } finally {
+            if( rs != null ) { try{ rs.close(); } catch(Exception e){} }
+            if( ps != null ) { try{ ps.close(); } catch(Exception e){} }
+            if( conn != null ) { try{ conn.close(); } catch(Exception e){} }
+        }
+    }
 }
