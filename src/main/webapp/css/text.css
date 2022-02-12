@@ -10,7 +10,12 @@
 }
 
 .main-txt {
-	font-size: 15px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.content-txt {
+	font-size: 14px;
 }
 
 .list-txt {
