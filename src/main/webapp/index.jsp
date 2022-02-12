@@ -17,14 +17,17 @@
 
 <html>
 <head>
-    <title>Java Cinema</title>
-    <link href="css/reset.css" rel="stylesheet" type="text/css">
-    <link href="css/text.css" rel="stylesheet" type="text/css">
-    <link href="css/logo.css" rel="stylesheet" type="text/css">
-    <link href="css/header.css" rel="stylesheet" type="text/css">
-    <link href="css/footer.css" rel="stylesheet" type="text/css">
-    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <title>Title</title>
+    <link href="css/reset.css?ver=1" rel="stylesheet" type="text/css">
+    <link href="css/text.css?ver=1" rel="stylesheet" type="text/css">
+    <link href="css/logo.css?ver=1" rel="stylesheet" type="text/css">
+    <link href="css/header.css?ver=1" rel="stylesheet" type="text/css">
+    <link href="css/footer.css?ver=1" rel="stylesheet" type="text/css">
+    <link href="css/main.css?ver=1" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -32,13 +35,20 @@
 	 <header>
         <div class="header">
             <div class="header-inner header-search">
-				<a href="#"><i class="bi bi-search"></i></a>
+				<a href="#" class="list-txt"><i class="bi bi-search"></i></a>
 			</div>
             <div class="header-inner header-logo">
 				<a href="index.jsp"><img src="img/textLogo-color.png" class="logo-medium"></a>
 			</div>
             <div class="header-inner header-member">
-            	<a class="list-txt" href="login.jsp">로그인</a>
+            	<%if(session.getAttribute("customer_id")==null){%>
+            	<a href="login.jsp" class="list-txt">로그인</a>
+				<%}else{
+			    	String customer_id = (String)session.getAttribute("customer_id");
+				%>
+<%-- 			    <div class="list-txt"><%=customer_id%>님 반갑습니다</div> --%>
+			    <a href="logout.jsp" class="list-txt">로그아웃</a>
+				<%}%> 
             	<a class="list-txt" href="join.jsp">회원가입</a>
             	<a class="list-txt" href="#">고객센터</a>
             </div>
@@ -57,13 +67,46 @@
         </div>
     </nav>
     
-    <main class="container">
-    	
+    <section class="main-banner">
+    	<div class="main-banner_inner">
+    		<img src="">
+    		<div class="inner_content">
+	    		<h1>영화 제목</h1>
+	    		<p>줄거리</p>
+    		</div>
+    	</div>
+    </section>
+    
+    <main class="main">
+    	<div class="main_movie-chart">
+    		<h1 class="title-txt">영화 순위</h1>
+    	</div>
+    	<div class="main_event">
+    		<h1 class="title-txt">이벤트</h1>
+    	</div>
+    	<div class="main_news">
+    		<h1 class="news_title title-txt">소식</h1>
+    		<div class="news_content">
+	    		<div class="content_notice">
+<!--     				<a href="#"> -->
+	    				<p class="notice_title main-txt">공지사항</p>
+	    				<p class="notice_content content-txt">여기는 공지사항이 들어가는 자리입니다.</p>
+<!--     				</a> -->
+	    		</div>
+    			<div class="content_service-center">
+<!--     				<a href="#"> -->
+    					<p class="service-center_title main-txt">고객센터</p>
+	    				<p class="service-center_content content-txt">1234-1234</p>
+	    				<p class="service-center_content content-txt">운영시간(평일 00:00 ~ 00:00)</p>
+<!--     				</a> -->
+    			</div>
+    		</div>
+    	</div>
     </main>
     
     
 
-<a href="ticketing.jsp">예매</a>
+<%-- <a href="ticketing.jsp">예매</a>
 <%if(session.getAttribute("customer_id")==null){%>
     <a href="login.jsp">로그인</a>
 <%}else{
@@ -92,7 +135,7 @@
 </form>
 <hr>
 <% } // end of for
-} // end if-else %>
+} // end if-else %> --%>
 
 	<footer>
     	<div class="footer">
